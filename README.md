@@ -48,16 +48,24 @@ The API will be available at:
 
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| GET | `/users` | Get all users (paginated) | No |
-| GET | `/users/{id}` | Get user by ID | No |
-| POST | `/users` | Create a new user | No |
-| PUT | `/users/{id}` | Update a user | No |
-| DELETE | `/users/{id}` | Delete a user | No |
-| GET | `/users/protected` | Protected endpoint | Yes |
+| GET | `/api/users` | Get all users (paginated) | No |
+| GET | `/api/users/{id}` | Get user by ID | No |
+| POST | `/api/users` | Create a new user | No |
+| PUT | `/api/users/{id}` | Update a user | No |
+| DELETE | `/api/users/{id}` | Delete a user | No |
+| GET | `/api/users/protected` | Protected endpoint | Yes |
+
+### Test Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/test/exception` | Trigger exception |
+| GET | `/api/test/notfound` | Trigger 404 |
+| GET | `/api/test/badrequest` | Trigger 400 |
 
 ### Query Parameters
 
-**GET /users**
+**GET /api/users**
 - `page` (default: 1) - Page number
 - `pageSize` (default: 10, max: 100) - Items per page
 
@@ -74,7 +82,7 @@ X-API-Key: your-secret-api-key-12345
 ### Example Request
 
 ```bash
-curl -X GET http://localhost:5104/users/protected \
+curl -X GET http://localhost:5104/api/users/protected \
   -H "X-API-Key: your-secret-api-key-12345"
 ```
 
@@ -84,7 +92,7 @@ curl -X GET http://localhost:5104/users/protected \
 
 **Request:**
 ```http
-POST /users
+POST /api/users
 Content-Type: application/json
 
 {
@@ -108,7 +116,7 @@ Content-Type: application/json
 
 **Request:**
 ```http
-GET /users?page=1&pageSize=10
+GET /api/users?page=1&pageSize=10
 ```
 
 **Response (200 OK):**
@@ -153,13 +161,23 @@ Use the included `UserManagementAPI.http` file with the [REST Client](https://ma
 
 ```
 UserManagementAPI/
-├── Program.cs              # Main application file with all endpoints
-├── UserManagementAPI.csproj # Project configuration
-├── UserManagementAPI.http   # HTTP test requests
-├── appsettings.json         # Application settings
-├── appsettings.Development.json
+├── Program.cs                    # Application entry point
+├── Controllers/
+│   ├── UsersController.cs        # User CRUD endpoints
+│   └── TestController.cs         # Test/debug endpoints
+├── Models/
+│   └── User.cs                   # User entity and DTOs
+├── Services/
+│   └── UserService.cs            # Business logic layer
+├── Helpers/
+│   └── ValidationHelper.cs       # Input validation utilities
+├── Authentication/
+│   └── ApiKeyAuthenticationHandler.cs  # API key auth
+├── UserManagementAPI.csproj      # Project configuration
+├── UserManagementAPI.http        # HTTP test requests
+├── appsettings.json              # Application settings
 ├── Properties/
-│   └── launchSettings.json  # Launch configuration
+│   └── launchSettings.json       # Launch configuration
 └── README.md
 ```
 

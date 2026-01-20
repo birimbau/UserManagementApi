@@ -1,27 +1,27 @@
 @UserManagementAPI_HostAddress = http://localhost:5104
 
 ### Get all users (with pagination)
-GET {{UserManagementAPI_HostAddress}}/users
+GET {{UserManagementAPI_HostAddress}}/api/users
 Accept: application/json
 
 ### Get users with pagination parameters
-GET {{UserManagementAPI_HostAddress}}/users?page=1&pageSize=2
+GET {{UserManagementAPI_HostAddress}}/api/users?page=1&pageSize=2
 Accept: application/json
 
 ### Get user by ID
-GET {{UserManagementAPI_HostAddress}}/users/1
+GET {{UserManagementAPI_HostAddress}}/api/users/1
 Accept: application/json
 
 ### Get non-existent user
-GET {{UserManagementAPI_HostAddress}}/users/999
+GET {{UserManagementAPI_HostAddress}}/api/users/999
 Accept: application/json
 
 ### Get user with invalid ID
-GET {{UserManagementAPI_HostAddress}}/users/0
+GET {{UserManagementAPI_HostAddress}}/api/users/0
 Accept: application/json
 
 ### Create a new user (valid)
-POST {{UserManagementAPI_HostAddress}}/users
+POST {{UserManagementAPI_HostAddress}}/api/users
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ### Update an existing user
-PUT {{UserManagementAPI_HostAddress}}/users/1
+PUT {{UserManagementAPI_HostAddress}}/api/users/1
 Content-Type: application/json
 
 {
@@ -41,10 +41,10 @@ Content-Type: application/json
 }
 
 ### Delete a user
-DELETE {{UserManagementAPI_HostAddress}}/users/2
+DELETE {{UserManagementAPI_HostAddress}}/api/users/2
 
 ### Try to create user with invalid data
-POST {{UserManagementAPI_HostAddress}}/users
+POST {{UserManagementAPI_HostAddress}}/api/users
 Content-Type: application/json
 
 {
@@ -54,7 +54,7 @@ Content-Type: application/json
 }
 
 ### Try to create user with duplicate email
-POST {{UserManagementAPI_HostAddress}}/users
+POST {{UserManagementAPI_HostAddress}}/api/users
 Content-Type: application/json
 
 {
@@ -64,7 +64,7 @@ Content-Type: application/json
 }
 
 ### Try to create user with invalid age
-POST {{UserManagementAPI_HostAddress}}/users
+POST {{UserManagementAPI_HostAddress}}/api/users
 Content-Type: application/json
 
 {
@@ -74,21 +74,21 @@ Content-Type: application/json
 }
 
 ### Test exception handling - General exception
-GET {{UserManagementAPI_HostAddress}}/test/exception
+GET {{UserManagementAPI_HostAddress}}/api/test/exception
 
 ### Test exception handling - Not Found exception
-GET {{UserManagementAPI_HostAddress}}/test/notfound
+GET {{UserManagementAPI_HostAddress}}/api/test/notfound
 
 ### Test exception handling - Bad Request exception
-GET {{UserManagementAPI_HostAddress}}/test/badrequest
+GET {{UserManagementAPI_HostAddress}}/api/test/badrequest
 
 ### Test protected endpoint (without API key) - Should return 401
-GET {{UserManagementAPI_HostAddress}}/users/protected
+GET {{UserManagementAPI_HostAddress}}/api/users/protected
 
 ### Test protected endpoint (with valid API key) - Should return 200
-GET {{UserManagementAPI_HostAddress}}/users/protected
+GET {{UserManagementAPI_HostAddress}}/api/users/protected
 X-API-Key: your-secret-api-key-12345
 
 ### Test protected endpoint (with invalid API key) - Should return 401
-GET {{UserManagementAPI_HostAddress}}/users/protected
+GET {{UserManagementAPI_HostAddress}}/api/users/protected
 X-API-Key: invalid-key
