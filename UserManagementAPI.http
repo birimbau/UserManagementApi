@@ -1,0 +1,94 @@
+@UserManagementAPI_HostAddress = http://localhost:5104
+
+### Get all users (with pagination)
+GET {{UserManagementAPI_HostAddress}}/users
+Accept: application/json
+
+### Get users with pagination parameters
+GET {{UserManagementAPI_HostAddress}}/users?page=1&pageSize=2
+Accept: application/json
+
+### Get user by ID
+GET {{UserManagementAPI_HostAddress}}/users/1
+Accept: application/json
+
+### Get non-existent user
+GET {{UserManagementAPI_HostAddress}}/users/999
+Accept: application/json
+
+### Get user with invalid ID
+GET {{UserManagementAPI_HostAddress}}/users/0
+Accept: application/json
+
+### Create a new user (valid)
+POST {{UserManagementAPI_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "name": "Alice Williams",
+  "age": 28,
+  "email": "alice.williams@example.com"
+}
+
+### Update an existing user
+PUT {{UserManagementAPI_HostAddress}}/users/1
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated",
+  "age": 31,
+  "email": "john.doe.updated@example.com"
+}
+
+### Delete a user
+DELETE {{UserManagementAPI_HostAddress}}/users/2
+
+### Try to create user with invalid data
+POST {{UserManagementAPI_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "name": "",
+  "age": -5,
+  "email": "invalid-email"
+}
+
+### Try to create user with duplicate email
+POST {{UserManagementAPI_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "age": 25,
+  "email": "john.doe@example.com"
+}
+
+### Try to create user with invalid age
+POST {{UserManagementAPI_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "name": "Invalid Age User",
+  "age": 200,
+  "email": "invalid.age@example.com"
+}
+
+### Test exception handling - General exception
+GET {{UserManagementAPI_HostAddress}}/test/exception
+
+### Test exception handling - Not Found exception
+GET {{UserManagementAPI_HostAddress}}/test/notfound
+
+### Test exception handling - Bad Request exception
+GET {{UserManagementAPI_HostAddress}}/test/badrequest
+
+### Test protected endpoint (without API key) - Should return 401
+GET {{UserManagementAPI_HostAddress}}/users/protected
+
+### Test protected endpoint (with valid API key) - Should return 200
+GET {{UserManagementAPI_HostAddress}}/users/protected
+X-API-Key: your-secret-api-key-12345
+
+### Test protected endpoint (with invalid API key) - Should return 401
+GET {{UserManagementAPI_HostAddress}}/users/protected
+X-API-Key: invalid-key
